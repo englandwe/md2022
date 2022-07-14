@@ -14582,69 +14582,11 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <h1 id="Culture-Club:-Exploring-Genome-Annotations">Culture Club: Exploring Genome Annotations<a class="anchor-link" href="#Culture-Club:-Exploring-Genome-Annotations">&#182;</a></h1><p>We'll be working with a metagenome-assembled genome (MAG) from a Trunk River sample taken in 2018 (near_lem_2018). This MAG had 13x coverage in the metagenome (compared to 2000x for a green sulfur bacteria in the same sample!).</p>
 <p>Bin ID: <code>near_lem_2018_bin.22</code></p>
 <p>Classification: <code>d__Bacteria;p__Verrucomicrobiota;c__Verrucomicrobiae;o__Chthoniobacterales;f__;g__;s__</code></p>
-<table>
-<thead><tr>
-<th>Variable</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bin Id</td>
-<td>near_lem_2018_bin.22</td>
-</tr>
-<tr>
-<td>Coverage</td>
-<td>13.0</td>
-</tr>
-<tr>
-<td>Completeness</td>
-<td>96.28</td>
-</tr>
-<tr>
-<td>Contamination</td>
-<td>3.21</td>
-</tr>
-<tr>
-<td>Genome size (bp)</td>
-<td>2558784</td>
-</tr>
-<tr>
-<td># scaffolds</td>
-<td>244</td>
-</tr>
-<tr>
-<td>N50 (scaffolds)</td>
-<td>15575</td>
-</tr>
-<tr>
-<td>Mean scaffold length (bp)</td>
-<td>10486</td>
-</tr>
-<tr>
-<td>Longest scaffold (bp)</td>
-<td>62331</td>
-</tr>
-<tr>
-<td>GC</td>
-<td>64.1</td>
-</tr>
-<tr>
-<td># predicted genes</td>
-<td>2655</td>
-</tr>
-</tbody>
-</table>
 
 </div>
 </div>
 </div>
-</div>%%html
-<style>
-    table {
-        display: inline-block
-    }
-</style>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -14704,6 +14646,53 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </tr>
 </tbody>
 </table>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Open reading frames (ORFs):  2614</p>
+<p>Called with prodigal (v 2.6.3) in a conda environment.</p>
+<ul>
+<li>Why are there fewer ORFs than predicted genes in the table above?</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Annotations for these genes were done using blastKOALA (<a href="https://www.kegg.jp/blastkoala/">https://www.kegg.jp/blastkoala/</a>). KEGG provides a web server where you can upload a .fasta file of your ORFs and receieve a table of K numbers (KEGG identifiers) assigned to each gene. This can take a little while, so you can download pre-computed results here: <a href="https://drive.google.com/file/d/1M1rQzisXkrHvo8h74WL3eRanD_0kxRwq/view?usp=sharing">https://drive.google.com/file/d/1M1rQzisXkrHvo8h74WL3eRanD_0kxRwq/view?usp=sharing</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>KEGG also offers online tools for viewing and interpreting these annotations.  Upload the BlastKOALA results to the Reconstruct tool here: <a href="https://www.genome.jp/kegg/mapper/reconstruct.html">https://www.genome.jp/kegg/mapper/reconstruct.html</a>.  Click "Browse" to upload your file, then "Exec" to execute.</p>
+<p>You'll see a results page with four tabs.  Generally, click on the number to the left of an entry to open page with more information. Clicking the number in parentheses to the right will show associated contigs and their K-number assignments.</p>
+<ul>
+<li>Pathway: This tab places your annotations in the context of metabolic pathways. Clicking the number to the left will open a pathway map with genes your organisms has highlighted in green.</li>
+<li>Brite: BRITE is a hierarchical classification system, rather than pathway-focused.  This view is useful if you want to look at all the enzymes of a certain type (i.e. glycosyltransferases)</li>
+<li>Brite table: Shows some classes of conserved enzymes across domains of life. The ones your organism has are in red.</li>
+<li>Module: This another pathway-based view which lets you easily see which functional subsets of metabolism your organism has.  By default, only complete modules (where your organism has all the genes it needs) are shown; this can be adjusted at the top of the page.</li>
+</ul>
 
 </div>
 </div>
