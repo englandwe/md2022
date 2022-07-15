@@ -26,8 +26,8 @@ Open reading frames (ORFs):  2,614 (called with prodigal v2.6.3)
 
 
 ## Method 1: KEGG
-
-Annotations for these genes were done using blastKOALA (https://www.kegg.jp/blastkoala/). KEGG provides a web server where you can upload a .fasta file of your ORFs and receieve a table of K numbers (KEGG identifiers) assigned to each gene. This can take a little while, so you can download pre-computed results here: https://drive.google.com/file/d/1M1rQzisXkrHvo8h74WL3eRanD_0kxRwq/view?usp=sharing.
+genes
+Annotations for this bin were done using blastKOALA (https://www.kegg.jp/blastkoala/). KEGG provides a web server where you can upload an amino acid .fasta file of your ORFs and receieve a table of K numbers (KEGG identifiers) assigned to each. This can take a little while, so you can download pre-computed results here: https://drive.google.com/file/d/1M1rQzisXkrHvo8h74WL3eRanD_0kxRwq/view?usp=sharing.
 
 KEGG also offers online tools for viewing and interpreting these annotations.  Upload the BlastKOALA results to the Reconstruct tool here: https://www.genome.jp/kegg/mapper/reconstruct.html.  Click "Browse" to upload your file, then "Exec" to execute.
 
