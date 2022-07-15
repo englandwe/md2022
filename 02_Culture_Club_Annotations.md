@@ -6,7 +6,7 @@ Bin ID: `near_lem_2018_bin.22`
 
 Classification: `d__Bacteria;p__Verrucomicrobiota;c__Verrucomicrobiae;o__Chthoniobacterales;f__;g__;s__`
 
-| Variable | Value |
+|  |  |
 | --- | --- |
 | Bin Id | near_lem_2018_bin.22 |
 | Coverage | 13.0 |
@@ -39,7 +39,9 @@ You'll see a results page with four tabs.  Generally, click on the number to the
 
 ## Method 2: METABOLIC
 
-To be continued...
+METABOLIC (https://github.com/AnantharamanLab/METABOLIC) is a tool that profiles metabolic and biogeochemical traits.  It works on both genomic and metagenomic data.
+
+Selected outputs for bin22 can be dowloaded here: https://drive.google.com/drive/folders/1ksZNMByXQwWw1VZu9nszujBGE1DRcEPd?usp=sharing.  You should find a spreadsheet with hit information and a series of PDFs showing which parts of major cycles are present in the data.
 
 ## Culture Club Questions
 
