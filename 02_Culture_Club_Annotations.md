@@ -4,7 +4,6 @@ We'll be working with a metagenome-assembled genome (MAG) from a Trunk River sam
 
 Bin ID: `near_lem_2018_bin.22`
 
-Classification: `d__Bacteria;p__Verrucomicrobiota;c__Verrucomicrobiae;o__Chthoniobacterales;f__;g__;s__`
 
 |  |  |
 | --- | --- |
