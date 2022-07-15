@@ -12,20 +12,20 @@ Classification: `d__Bacteria;p__Verrucomicrobiota;c__Verrucomicrobiae;o__Chthoni
 | Coverage | 13.0 |
 | Completeness | 96.28 |
 | Contamination | 3.21 |
-| Genome size (bp) | 2558784 |
+| Genome size (bp) | 2,558,784 |
 | \# scaffolds | 244 |
-| N50 (scaffolds) | 15575 | 
-| Mean scaffold length (bp) | 10486 |
-| Longest scaffold (bp) | 62331 |
+| N50 (scaffolds) | 15,575 | 
+| Mean scaffold length (bp) | 10,486 |
+| Longest scaffold (bp) | 62,331 |
 | GC | 64.1 |
-| \# predicted genes | 2655 |
+| \# predicted genes | 2,655 |
 
-Open reading frames (ORFs):  2614
+Open reading frames (ORFs):  2,614 (called with prodigal v2.6.3)
 
-Called with prodigal (v 2.6.3) in a conda environment. 
+- _Why are there fewer ORFs than predicted genes in the table above?_
 
-- Why are there fewer ORFs than predicted genes in the table above?
 
+## Method 1: KEGG
 
 Annotations for these genes were done using blastKOALA (https://www.kegg.jp/blastkoala/). KEGG provides a web server where you can upload a .fasta file of your ORFs and receieve a table of K numbers (KEGG identifiers) assigned to each gene. This can take a little while, so you can download pre-computed results here: https://drive.google.com/file/d/1M1rQzisXkrHvo8h74WL3eRanD_0kxRwq/view?usp=sharing.
 
@@ -37,9 +37,11 @@ You'll see a results page with four tabs.  Generally, click on the number to the
 - Brite table: Shows some classes of conserved enzymes across domains of life. The ones your organism has are in red.
 - Module: This another pathway-based view which lets you easily see which functional subsets of metabolism your organism has.  By default, only complete modules (where your organism has all the genes it needs) are shown; this can be adjusted at the top of the page.
 
-metabolic instructions
+## Method 2: METABOLIC
 
-## Questions for Friday Culture club workshop
+To be continued...
+
+## Culture Club Questions
 
 ### Compare KEGG vs METABOLIC output.  Find two differences that seem MAJOR to you. What are they?
 
@@ -52,8 +54,3 @@ metabolic instructions
 * Any genes involved in the many sulfur-compound transformations we have talked about?
 * The ability to fix nitrogen?
 * The ability to fix carbon?
-
-
-```bash
-
-```
