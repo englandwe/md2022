@@ -54,8 +54,8 @@ CheckV can do quality control for the VirSorter2 results and trim any host seque
 
 
 ```bash
-checkv end_to_end vs2-pass1/final-viral-combined.fa \
-checkv_out_time -t 3 -d /opt/checkv_db/checkv-db-v1.2
+checkv end_to_end vs2-pass1-EXAMPLE/final-viral-combined.fa \
+checkv_out -t 3 -d /opt/checkv_db/checkv-db-v1.2
 ```
 
 ## Step 3: VirSorter, too
@@ -81,8 +81,8 @@ DRAM-v will annotate the identified viral sequences; this will allow us to see w
 
 
 ```bash
-DRAM-v.py annotate -i vs2-pass2/for-dramv/final-viral-combined-for-dramv.fa \
--v vs2-pass2/for-dramv/viral-affi-contigs-for-dramv.tab \
+DRAM-v.py annotate -i vs2-pass2-EXAMPLE/for-dramv/final-viral-combined-for-dramv.fa \
+-v vs2-pass2-EXAMPLE/for-dramv/viral-affi-contigs-for-dramv.tab \
 -o dramv-annotate --skip_trnascan --threads 4 --min_contig_size 1000
 ```
 

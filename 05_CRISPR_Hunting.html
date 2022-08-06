@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>04_Virus_Hunting</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>05_CRISPR_Hunting</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14579,20 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Identification-of-Viruses">Identification of Viruses<a class="anchor-link" href="#Identification-of-Viruses">&#182;</a></h1><p>Mobile genetic elements can be identified in genomes and metagenomes using both homology to known reference elements, sequence characteristics (e.g., GC%, k-mer composition) and genomic context. Virsorter2 can use both reference-dependent and reference-independent methods to detect viruses in single genomes and metagenomes.</p>
-<p>This workshop is adapted from the current VirSorter2 SOP (V3: <a href="https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o">https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o</a>).  More details on installation of the tools and manual checking of viral hits can be found in the original protocol.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-0:-Get-ready">Step 0: Get ready<a class="anchor-link" href="#Step-0:-Get-ready">&#182;</a></h2><p>All our tools today are installed in a conda environment.  To activate it:</p>
+<h1 id="CRISPR-Hunting">CRISPR Hunting<a class="anchor-link" href="#CRISPR-Hunting">&#182;</a></h1><p>Today we'll be identifying CRISPR sequences in a set of genomes from strains isolated from Sippewissett salt marsh mats.  They appeared as <strong>w</strong>hite <strong>o</strong>n the <strong>g</strong>reen background of the mats, and are referred to here as WOGs.  They were sequenced with PacBio long-read technology, and are likely to have intact CRISPR arrays - if they have CRISPRs at all.</p>
+<h2 id="Step-0:-Get-ready">Step 0: Get ready<a class="anchor-link" href="#Step-0:-Get-ready">&#182;</a></h2><p>Our tool of choice today is <code>cctk</code>, which is installed in its own conda environment.  Activate it with:</p>
 
 </div>
 </div>
@@ -14605,7 +14593,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>conda activate vs2
+<div class=" highlight hl-bash"><pre><span></span>conda activate cctk
 </pre></div>
 
      </div>
@@ -14620,7 +14608,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We'll be searching for integrated viruses in a <em>Vibrio alginolyticus</em> isolated by Dallas Mould during the 2021 course. Make a new directory to work in (use your personal directory in your group's folder) and copy the data.</p>
+<p>Make a new working directory and copy over the WOG genomes.</p>
 
 </div>
 </div>
@@ -14633,7 +14621,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>mkdir /YOUR_GROUP/YOUR_NAME/virus_hunting
+<div class=" highlight hl-bash"><pre><span></span>mkdir /YOUR_GROUP/YOUR_DIRECTORY/crispr_hunting
 </pre></div>
 
      </div>
@@ -14649,7 +14637,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span><span class="nb">cd</span> /YOUR_GROUP/YOUR_NAME/virus_hunting
+<div class=" highlight hl-bash"><pre><span></span>cp /datahaus/crispr_hunting/crispr_data.zip .
 </pre></div>
 
      </div>
@@ -14665,23 +14653,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>cp /datahaus/viruses/virus_data.zip .
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>unzip virus_data.zip
+<div class=" highlight hl-bash"><pre><span></span>unzip crispr_data.zip
 </pre></div>
 
      </div>
@@ -14696,19 +14668,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>You should now have a .fasta file continaing the assembled genome contigs (<code>DLM_007.fasta</code>), as well as 2 directories (<code>vs2-pass1-EXAMPLE</code> and <code>vs2-pass2-EXAMPLE</code>). The EXAMPLE directories contain results from steps 1 and 3 below, as these steps take ~20 minutes to run. You can use these in place of your own results if they're not ready in time.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-1:-Identify-viruses-with-VirSorter2">Step 1: Identify viruses with VirSorter2<a class="anchor-link" href="#Step-1:-Identify-viruses-with-VirSorter2">&#182;</a></h2><p>For this run, we'll focus on phages; <code>--include-groups dsDNAphage,ssDNA</code> will limit the groups we're searching for. The minimum viral length is 5000bp, due to requirements for downstream programs 0.5 is a loose score cutoff; more viruses will be captured, but some host genes may be included. The "--keep-original-seq" retains contigs that are nearly fully viral; any remaining host genes will be trimmed in a later step.</p>
+<h2 id="Step-1:-Find-CRISPRs-with-MinCED">Step 1: Find CRISPRs with MinCED<a class="anchor-link" href="#Step-1:-Find-CRISPRs-with-MinCED">&#182;</a></h2><p>You should have a folder called <code>WOG_assemblies</code>, containing .fasta files of contigs from the 4 WOG genomes.  To search for CRISPRs in these genomes, ues <code>cctk minced</code>.  This uses the program MinCED to identify CRISPR repeats in the contigs and extract repeats and spacer sequences.  First, make a directory for the output files, then run the command using the WOG_assemblies directory as input. <code>-m -p</code> tells cctk to run MinCED and process the output.</p>
 
 </div>
 </div>
@@ -14721,9 +14681,23 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>virsorter run --keep-original-seq -i DLM_007.fasta -w vs2-pass1 <span class="se">\</span>
---include-groups dsDNAphage,ssDNA --min-length <span class="m">5000</span> <span class="se">\</span>
---min-score <span class="m">0</span>.5 -j <span class="m">4</span> all
+<div class=" highlight hl-bash"><pre><span></span>mkdir minced_crisprs
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>cctk minced -i WOG_assemblies/ -o minced_crisprs/ -m -p
 </pre></div>
 
      </div>
@@ -14738,141 +14712,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-2:-Trim-with-CheckV">Step 2: Trim with CheckV<a class="anchor-link" href="#Step-2:-Trim-with-CheckV">&#182;</a></h2><p>CheckV can do quality control for the VirSorter2 results and trim any host sequence left at the ends of integrated viruses. This step should take &lt; 5 minutes to run.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>checkv end_to_end vs2-pass1-EXAMPLE/final-viral-combined.fa <span class="se">\</span>
-checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-3:-VirSorter,-too">Step 3: VirSorter, too<a class="anchor-link" href="#Step-3:-VirSorter,-too">&#182;</a></h2><p>Now, combine the viruses and proviruses and run the trimmed sequences through VirSorter2 one more time. This primarily to generate an output file needed for the next step, DRAMv (<code>affi-contigs.tab</code>). <code>--seqname-suffix-off</code>, <code>--viral-gene-enrich-off</code>, and <code>--provirus-off</code> turn off VirSorter2's screening and renaming functions.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>cat checkv_out/proviruses.fna checkv_out/viruses.fna &gt; checkv_out/combined.fna
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>virsorter run --seqname-suffix-off --viral-gene-enrich-off <span class="se">\</span>
---provirus-off --prep-for-dramv -i checkv_out/combined.fna <span class="se">\</span>
--w vs2-pass2 --include-groups dsDNAphage,ssDNA <span class="se">\</span>
---min-length <span class="m">5000</span> --min-score <span class="m">0</span>.5 -j <span class="m">4</span> all
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-4:-Annotation-with-DRAM-v">Step 4: Annotation with DRAM-v<a class="anchor-link" href="#Step-4:-Annotation-with-DRAM-v">&#182;</a></h2><p>DRAM-v will annotate the identified viral sequences; this will allow us to see which types of viral and host genes are present in the hits, which is valuable for quality checking. This will take ~3 minutes.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>DRAM-v.py annotate -i vs2-pass2-EXAMPLE/for-dramv/final-viral-combined-for-dramv.fa <span class="se">\</span>
--v vs2-pass2-EXAMPLE/for-dramv/viral-affi-contigs-for-dramv.tab <span class="se">\</span>
--o dramv-annotate --skip_trnascan --threads <span class="m">4</span> --min_contig_size <span class="m">1000</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>DRAM-v.py distill -i dramv-annotate/annotations.tsv -o dramv-distill
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-5:-Manual-curation-and-screening">Step 5: Manual curation and screening<a class="anchor-link" href="#Step-5:-Manual-curation-and-screening">&#182;</a></h2><p>Viral predictions are not an exact science; determining whether a VirSorter hit is "real" may require additional inspection.  The authors of VirSorter have put together some guidelines.</p>
-<p>Hits can be binned into the following categories:</p>
+<p>Check the output files in <code>minced_crisprs/PROCESSED</code>.</p>
 <ul>
-<li>Keep1: viral_gene &gt;0</li>
-<li>Keep2: viral_gene =0 AND (host_gene =0 OR score &gt;=0.95 OR hallmark &gt;2)</li>
-<li>Manual check: (NOT in Keep1 OR Keep2) AND viral_gene =0 AND host_gene =1 AND length &gt;=10kb</li>
-<li>Discard: everything else</li>
-</ul>
-<p><code>score</code> and <code>hallmark</code> are found in <code>vs2-pass1/final-viral-score.tsv</code>; <code>viral_gene</code> and <code>host_gene</code> are in <code>checkv_out/contamination.tsv</code></p>
-<p>False-positives are possible in the Keep2 category due to genes that are present in both host and virus, such as the ones in this list: <a href="https://bitbucket.org/MAVERICLab/virsorter2-sop/raw/03b8f28bee979e2b7fd99d7375d915c29c938339/resource/suspicious-gene.list">https://bitbucket.org/MAVERICLab/virsorter2-sop/raw/03b8f28bee979e2b7fd99d7375d915c29c938339/resource/suspicious-gene.list</a> . You can look through the DRAM-v annotations for your Keep2 hits for these suspicious genes; any hits that have them should be moved to the manual check category.</p>
-<p>Hits designated manual check should be investigated more closely using DRAM-v annotations; some guidelines are here: <a href="https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o/?step=5">https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o/?step=5</a> .</p>
-<ul>
-<li><em>Which of the viral hits in this genome do you believe?</em></li>
+<li><em>Do all strains have CRISPRs?</em></li>
+<li><em>Do the strains with CRISPRs have different spacer arrays?</em></li>
 </ul>
 
 </div>
@@ -14885,7 +14728,13 @@ checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If you want to leave the vs2 conda environment when you're finished:</p>
+<h2 id="Step-2:-Visualize-CRISPR-arrays">Step 2: Visualize CRISPR arrays<a class="anchor-link" href="#Step-2:-Visualize-CRISPR-arrays">&#182;</a></h2><p>cctk's crisprDiff function can generate a plot showing relatedness among CRISPR arrays.  We can use it to compare our two types of arrays. An example plot is shown below.</p>
+<p><img src="cdplot.png" alt="cdplot.png"></p>
+<p>The key elements are:</p>
+<p>1) Array ID</p>
+<p>2) Spacers unique to a single array on the plot (black line)</p>
+<p>3) Spacers found in more than one array (large filled rectangles)</p>
+<p>4) Lines connecting shared spacers</p>
 
 </div>
 </div>
@@ -14898,7 +14747,7 @@ checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>conda deactivate
+<div class=" highlight hl-bash"><pre><span></span><span class="nb">cd</span> minced_crisprs/
 </pre></div>
 
      </div>
@@ -14906,6 +14755,194 @@ checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
 </div>
 </div>
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>mkdir plots
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>cctk crisprdiff -a PROCESSED/Array_IDs.txt -o plots/all_diff.png
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>display plots/all_diff.png
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><em>Which spacers are shared between array types?</em></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Step-3:-Find-targets">Step 3: Find targets<a class="anchor-link" href="#Step-3:-Find-targets">&#182;</a></h2><p>Now that we know the spacer sequences of all our arrays, we can use them to find targeted sequences with BLAST.  First, we'll check our set of genomes.  Build a BLAST database of all 4 metagenomes.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>makeblastdb -in blastdb/all_WOG_assemblies.fasta <span class="se">\</span>
+-out blastdb/all_WOGs -dbtype nucl -parse_seqids
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now look for matches using <code>cctk spacerblast</code>. We can provide the array locations to avoid self-matches to the CRISPR array. <code>-p 100</code> sets the percent identity of the match, so we'll only be looking for perfect matches.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>cctk spacerblast -d blastdb/all_WOGs <span class="se">\</span>
+-s minced_crisprs/PROCESSED/CRISPR_spacers.fna <span class="se">\</span>
+-p <span class="m">100</span> -r minced_crisprs/PROCESSED/Array_locations.bed
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>There are two additional blast databases you can search for viral matches:</p>
+<ul>
+<li>all_shep_viromes, which contains sequenced supernatant from six Sippewissett isolate cultures</li>
+<li>pinksand_meta, which contains a metagenome of Sippewissett pink sand</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>cctk spacerblast -d blastdb/all_shep_viromes <span class="se">\</span>
+-s minced_crisprs/PROCESSED/CRISPR_spacers.fna <span class="se">\</span>
+-p <span class="m">100</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>cctk spacerblast -d blastdb/pinksand_meta <span class="se">\</span>
+-s minced_crisprs/PROCESSED/CRISPR_spacers.fna <span class="se">\</span>
+-p <span class="m">100</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><em>Are there hits to any of the databases?</em></li>
+<li><em>How could you check if these are hits to viruses or other CRISPR arrays?</em></li>
+</ul>
+
+</div>
+</div>
+</div>
 </div>
 </body>
 

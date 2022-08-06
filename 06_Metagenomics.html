@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>04_Virus_Hunting</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>06_Metagenomics</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14579,20 +14579,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Identification-of-Viruses">Identification of Viruses<a class="anchor-link" href="#Identification-of-Viruses">&#182;</a></h1><p>Mobile genetic elements can be identified in genomes and metagenomes using both homology to known reference elements, sequence characteristics (e.g., GC%, k-mer composition) and genomic context. Virsorter2 can use both reference-dependent and reference-independent methods to detect viruses in single genomes and metagenomes.</p>
-<p>This workshop is adapted from the current VirSorter2 SOP (V3: <a href="https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o">https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o</a>).  More details on installation of the tools and manual checking of viral hits can be found in the original protocol.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-0:-Get-ready">Step 0: Get ready<a class="anchor-link" href="#Step-0:-Get-ready">&#182;</a></h2><p>All our tools today are installed in a conda environment.  To activate it:</p>
+<h1 id="Metagenomic-analysis-with-anvi%E2%80%99o">Metagenomic analysis with anvi&#8217;o<a class="anchor-link" href="#Metagenomic-analysis-with-anvi%E2%80%99o">&#182;</a></h1><p>Anvi’o is a powerful tool for analysis of metagenomic assemblies which integrates some pretty excellent visualizations.  Today, we’re going to use some previously-assembled metagenomes from the 2018 course: three Salt Pond metagenomes from varying depths.</p>
+<h2 id="Step-0:-Get-Ready">Step 0: Get Ready<a class="anchor-link" href="#Step-0:-Get-Ready">&#182;</a></h2><p>We'll start by using anvi'o on the server. Much like QIIME, we need to load a conda environment specific to anvi’o.</p>
 
 </div>
 </div>
@@ -14605,7 +14593,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>conda activate vs2
+<div class=" highlight hl-bash"><pre><span></span>conda activate anvio-7.1
 </pre></div>
 
      </div>
@@ -14620,7 +14608,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We'll be searching for integrated viruses in a <em>Vibrio alginolyticus</em> isolated by Dallas Mould during the 2021 course. Make a new directory to work in (use your personal directory in your group's folder) and copy the data.</p>
+<p>Anvi’o requires two basic inputs to work: a FASTA file of your assembly contigs, and BAM files of your metagenome reads aligned to those contigs.  We’ve prepared these for you in /datahaus/metagenomes. Each member of your group should pick one of the three metagenomes; ensure that all three are represented across your group.</p>
 
 </div>
 </div>
@@ -14633,7 +14621,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>mkdir /YOUR_GROUP/YOUR_NAME/virus_hunting
+<div class=" highlight hl-bash"><pre><span></span>mkdir /YOUR_GROUP/YOUR_DIRECTORY/metagenomes
 </pre></div>
 
      </div>
@@ -14649,7 +14637,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span><span class="nb">cd</span> /YOUR_GROUP/YOUR_NAME/virus_hunting
+<div class=" highlight hl-bash"><pre><span></span><span class="nb">cd</span> /YOUR_GROUP/YOUR_DIRECTORY/metagenomes
 </pre></div>
 
      </div>
@@ -14665,23 +14653,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>cp /datahaus/viruses/virus_data.zip .
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>unzip virus_data.zip
+<div class=" highlight hl-bash"><pre><span></span>cp /datahaus/metagenomes/saltpond.zip .
 </pre></div>
 
      </div>
@@ -14696,19 +14668,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>You should now have a .fasta file continaing the assembled genome contigs (<code>DLM_007.fasta</code>), as well as 2 directories (<code>vs2-pass1-EXAMPLE</code> and <code>vs2-pass2-EXAMPLE</code>). The EXAMPLE directories contain results from steps 1 and 3 below, as these steps take ~20 minutes to run. You can use these in place of your own results if they're not ready in time.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-1:-Identify-viruses-with-VirSorter2">Step 1: Identify viruses with VirSorter2<a class="anchor-link" href="#Step-1:-Identify-viruses-with-VirSorter2">&#182;</a></h2><p>For this run, we'll focus on phages; <code>--include-groups dsDNAphage,ssDNA</code> will limit the groups we're searching for. The minimum viral length is 5000bp, due to requirements for downstream programs 0.5 is a loose score cutoff; more viruses will be captured, but some host genes may be included. The "--keep-original-seq" retains contigs that are nearly fully viral; any remaining host genes will be trimmed in a later step.</p>
+<h2 id="Step-1:--Load-contigs-into-an-anvi%E2%80%99o-database.">Step 1:  Load contigs into an anvi&#8217;o database.<a class="anchor-link" href="#Step-1:--Load-contigs-into-an-anvi%E2%80%99o-database.">&#182;</a></h2><p>Reads from each metagenome have been mapped to a single set of contigs generated from assemblies of the corresponding metagenomes; this file is called saltpond_contigs_top1k.fasta.  For demonstration purposes, this file includes only the 1000 longest contigs.</p>
+<p>Use the following command to generate a contig database (~4 mins):</p>
 
 </div>
 </div>
@@ -14721,9 +14682,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>virsorter run --keep-original-seq -i DLM_007.fasta -w vs2-pass1 <span class="se">\</span>
---include-groups dsDNAphage,ssDNA --min-length <span class="m">5000</span> <span class="se">\</span>
---min-score <span class="m">0</span>.5 -j <span class="m">4</span> all
+<div class=" highlight hl-bash"><pre><span></span>anvi-gen-contigs-database -f saltpond_contigs_top1k.fasta <span class="se">\</span>
+-o saltpond_contigs.db -n <span class="s1">&#39;saltpond&#39;</span> -T <span class="m">4</span>
 </pre></div>
 
      </div>
@@ -14738,141 +14698,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-2:-Trim-with-CheckV">Step 2: Trim with CheckV<a class="anchor-link" href="#Step-2:-Trim-with-CheckV">&#182;</a></h2><p>CheckV can do quality control for the VirSorter2 results and trim any host sequence left at the ends of integrated viruses. This step should take &lt; 5 minutes to run.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>checkv end_to_end vs2-pass1-EXAMPLE/final-viral-combined.fa <span class="se">\</span>
-checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-3:-VirSorter,-too">Step 3: VirSorter, too<a class="anchor-link" href="#Step-3:-VirSorter,-too">&#182;</a></h2><p>Now, combine the viruses and proviruses and run the trimmed sequences through VirSorter2 one more time. This primarily to generate an output file needed for the next step, DRAMv (<code>affi-contigs.tab</code>). <code>--seqname-suffix-off</code>, <code>--viral-gene-enrich-off</code>, and <code>--provirus-off</code> turn off VirSorter2's screening and renaming functions.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>cat checkv_out/proviruses.fna checkv_out/viruses.fna &gt; checkv_out/combined.fna
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>virsorter run --seqname-suffix-off --viral-gene-enrich-off <span class="se">\</span>
---provirus-off --prep-for-dramv -i checkv_out/combined.fna <span class="se">\</span>
--w vs2-pass2 --include-groups dsDNAphage,ssDNA <span class="se">\</span>
---min-length <span class="m">5000</span> --min-score <span class="m">0</span>.5 -j <span class="m">4</span> all
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-4:-Annotation-with-DRAM-v">Step 4: Annotation with DRAM-v<a class="anchor-link" href="#Step-4:-Annotation-with-DRAM-v">&#182;</a></h2><p>DRAM-v will annotate the identified viral sequences; this will allow us to see which types of viral and host genes are present in the hits, which is valuable for quality checking. This will take ~3 minutes.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>DRAM-v.py annotate -i vs2-pass2-EXAMPLE/for-dramv/final-viral-combined-for-dramv.fa <span class="se">\</span>
--v vs2-pass2-EXAMPLE/for-dramv/viral-affi-contigs-for-dramv.tab <span class="se">\</span>
--o dramv-annotate --skip_trnascan --threads <span class="m">4</span> --min_contig_size <span class="m">1000</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>DRAM-v.py distill -i dramv-annotate/annotations.tsv -o dramv-distill
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Step-5:-Manual-curation-and-screening">Step 5: Manual curation and screening<a class="anchor-link" href="#Step-5:-Manual-curation-and-screening">&#182;</a></h2><p>Viral predictions are not an exact science; determining whether a VirSorter hit is "real" may require additional inspection.  The authors of VirSorter have put together some guidelines.</p>
-<p>Hits can be binned into the following categories:</p>
+<p>This command will do a few useful things:</p>
 <ul>
-<li>Keep1: viral_gene &gt;0</li>
-<li>Keep2: viral_gene =0 AND (host_gene =0 OR score &gt;=0.95 OR hallmark &gt;2)</li>
-<li>Manual check: (NOT in Keep1 OR Keep2) AND viral_gene =0 AND host_gene =1 AND length &gt;=10kb</li>
-<li>Discard: everything else</li>
-</ul>
-<p><code>score</code> and <code>hallmark</code> are found in <code>vs2-pass1/final-viral-score.tsv</code>; <code>viral_gene</code> and <code>host_gene</code> are in <code>checkv_out/contamination.tsv</code></p>
-<p>False-positives are possible in the Keep2 category due to genes that are present in both host and virus, such as the ones in this list: <a href="https://bitbucket.org/MAVERICLab/virsorter2-sop/raw/03b8f28bee979e2b7fd99d7375d915c29c938339/resource/suspicious-gene.list">https://bitbucket.org/MAVERICLab/virsorter2-sop/raw/03b8f28bee979e2b7fd99d7375d915c29c938339/resource/suspicious-gene.list</a> . You can look through the DRAM-v annotations for your Keep2 hits for these suspicious genes; any hits that have them should be moved to the manual check category.</p>
-<p>Hits designated manual check should be investigated more closely using DRAM-v annotations; some guidelines are here: <a href="https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o/?step=5">https://www.protocols.io/view/viral-sequence-identification-sop-with-virsorter2-5qpvoyqebg4o/?step=5</a> .</p>
-<ul>
-<li><em>Which of the viral hits in this genome do you believe?</em></li>
+<li>Calculate tetranucleotide frequencies for all contigs</li>
+<li>Split long contigs (&gt;20kb) into smaller bits</li>
+<li>Predict ORFs on contigs using Prodigal </li>
+<li>Store all that in a contigs database called saltpond_contigs.db.</li>
 </ul>
 
 </div>
@@ -14885,7 +14716,7 @@ checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If you want to leave the vs2 conda environment when you're finished:</p>
+<h2 id="Step-2:-Identify-genes-on-contigs">Step 2: Identify genes on contigs<a class="anchor-link" href="#Step-2:-Identify-genes-on-contigs">&#182;</a></h2><p>This command will use HMMER to identify hits in the predicted genes on your contigs to ribosomal RNAs and known single-copy core genes from bacteria, archaea, and eukaryotes (~2 mins).</p>
 
 </div>
 </div>
@@ -14898,7 +14729,7 @@ checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-bash"><pre><span></span>conda deactivate
+<div class=" highlight hl-bash"><pre><span></span>anvi-run-hmms -c saltpond_contigs.db -T <span class="m">4</span>
 </pre></div>
 
      </div>
@@ -14906,6 +14737,415 @@ checkv_out -t <span class="m">3</span> -d /opt/checkv_db/checkv-db-v1.2
 </div>
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The -c flag tells anvio which contig database to use, and the -T flag allows us to use multiple processors, because we’re impatient people.</p>
+<p>We can also use NCBI’s Cluster of Orthologous Genes (COGs) to try and identify those ORFs (~4 mins):</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-run-ncbi-cogs -c saltpond_contigs.db -T <span class="m">4</span> <span class="se">\</span>
+--cog-data-dir /opt/anvio_cog_data
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>And use sequences from the GTDB to assign taxonomy. (~1 min):</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-run-scg-taxonomy -c saltpond_contigs.db -T <span class="m">4</span> <span class="se">\</span>
+ --min-percent-identity <span class="m">80</span> --debug
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We can now pick a specific marker gene and see what the taxonomic composition of our metagenome looks like based on solely that gene.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-estimate-scg-taxonomy -c saltpond_contigs.db <span class="se">\</span>
+--metagenome-mode -S Ribosomal_L16
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><em>Do taxonomy estimates change for different marker genes?</em></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Side Note:  You can also import other useful pieces of information about your contigs, such as gene calls you’ve previously generated, into anvi’o.  Check out the anvi’o documentation for more info.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Step-3:-Examine-your-contigs">Step 3: Examine your contigs<a class="anchor-link" href="#Step-3:-Examine-your-contigs">&#182;</a></h2><p>Let’s see what we just did to those contigs. Download the saltpond_contigs.db contigs database to your computer via Cyberduck, WinSCP, scp, etc. and start up your <strong>local copy</strong> of anvi’o.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-display-contigs-stats saltpond_contigs.db
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This command does what it says on the tin.  A browser window should open with a histogram of single-copy core genes and other assorted stats.</p>
+<ul>
+<li><em>How many eukaryotic, archaeal, and bacterial genomes do we expect to see?</em></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Step-4:-Profiling-.bam-files">Step 4: Profiling .bam files<a class="anchor-link" href="#Step-4:-Profiling-.bam-files">&#182;</a></h2><p>In addition to contig databases, anvi’o also uses profile databases to store information about individual samples.  A separate profile database is generated for each sample.  For now, you’re just working with one sample.</p>
+<p>These .bam files were generated by mapping reads from each individual sample to the top 1k contigs using bowtie2, just like the read mapping from our genome assembly workshop.</p>
+<p>Replace XXX with your sample (350, 375, 400) and run this command to generate a profile database (~3 mins).</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-profile -i SPXXX_top1k_sorted.bam -c saltpond_contigs.db <span class="se">\</span>
+-o SPXXX_profile -S SPXXX -T <span class="m">4</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This command processes all contigs over 1,000bp (you can change this value if you wish). As part of profiling, anvi’o compares reads from the sample to your contigs and calculates the mean and standard deviation of coverage, as well as identifying any positions with single nucleotide polymorphisms (SNPs).</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Step-5:-Merge-profiles">Step 5: Merge profiles<a class="anchor-link" href="#Step-5:-Merge-profiles">&#182;</a></h2><p>While you can use anvi’o with a single sample, it’s much more fun with multiple metagenomes.  Now that you’ve gotten one metagenome ready, go copy the PROFILE.db file for the other two metagenomes from your group members.  Make sure to keep them in separate directories!</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>cp -r /YOUR_GROUP_DIR/SOMEONE_ELSES_DIR/SPXXX_profile . <span class="c1">#x2</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now merge your samples into a single profile.  This step will also attempt to hierarchically cluster your contigs.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-merge SP350_profile/PROFILE.db SP375_profile/PROFILE.db <span class="se">\</span>
+SP400_profile/PROFILE.db -o saltpond_merged <span class="se">\</span>
+-S saltpond_merged -c saltpond_contigs.db
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Step-6:-Binning">Step 6: Binning<a class="anchor-link" href="#Step-6:-Binning">&#182;</a></h2><p>Binning allows us to take our metagenomic contigs and cluster them into bins, allowing us to create MAGs.  You can invoke several popular binning algorithms from within anvi'o, but this is considered an experimental feature.  You could also export your contigs from anvi'o, bin them as you prefer, and reimport them into anvi'o for visualization.</p>
+<p>We'll be binning using CONCOCT, which uses differential COverage among metagenomes and base COmposition (tetranucleotide frequencies) to cluster contigs.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-cluster-contigs -p saltpond_merged/PROFILE.db <span class="se">\</span>
+-c saltpond_contigs.db -C concoct_bins --driver concoct --just-do-it
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Step-7:-Visualization-and-bin-refinement">Step 7: Visualization and bin refinement<a class="anchor-link" href="#Step-7:-Visualization-and-bin-refinement">&#182;</a></h2><p>This is where we switch from anvi’o on the server to your locally-installed copy of anvi’o.  Download your <strong>contigs database (again)</strong> and <strong>merged profile database directory</strong> using your preferred method (scp, Cyberduck, WinSCP, etc.).  Now, on your computer, load the anvi’o visualizations.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-interactive -p saltpond_merged/PROFILE.db -c saltpond_contigs.db
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Some things to try:</p>
+<ul>
+<li>Blast a contig ("split")</li>
+<li>Find a SNP and identify which gene it's in</li>
+<li>Load your CONCOCT bins and check out taxonomy estimates</li>
+<li>Evaluate bin quality using completion and redundancy</li>
+<li>Pick a high-completion, high-redundancy bin to refine</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>You can generate a static summary page of your bins through the interactive interface, or from the command line:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-summarize -p saltpond_merged/PROFILE.db <span class="se">\</span>
+-c saltpond_contigs.db -C concoct_bins -o concoct_bin_summary
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Check out the .html file this command produces for a summary of your data.  The other folders that are generated contain all kinds of goodies you may find useful, including fasta files of all the contigs in each bin.</p>
+<p>Anvi'o also has an interactive bin refinement tool, <code>anvi-refine</code>.  Replace <code>Bin_X</code> with the bin you chose to refine and open <code>anvi-refine</code>:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-bash"><pre><span></span>anvi-refine -p saltpond_merged/PROFILE.db <span class="se">\</span>
+-c saltpond_contigs.db -C concoct_bins -b Bin_X
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For guidelines on bin refinement, check out:</p>
+<p><a href="https://merenlab.org/2016/06/09/assessing-completion-and-contamination-of-MAGs/">https://merenlab.org/2016/06/09/assessing-completion-and-contamination-of-MAGs/</a></p>
+<p><a href="https://merenlab.org/2015/05/11/anvi-refine/">https://merenlab.org/2015/05/11/anvi-refine/</a></p>
+<p><a href="https://merenlab.org/2017/05/11/anvi-refine-by-veronika/">https://merenlab.org/2017/05/11/anvi-refine-by-veronika/</a></p>
+
+</div>
+</div>
+</div>
 </div>
 </body>
 
